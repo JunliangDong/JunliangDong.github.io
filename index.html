@@ -81,62 +81,158 @@
     </div>
 
     <script>
-        var app = new Vue({
+        new Vue({
             el: '#app',
             data: {
-                interests: ['Web Development', 'Machine Learning', 'UI/UX Design'],
-                educations: [
-                    { degree: 'Bachelor of Science', school: 'University of Example', year: '2018 - 2022' },
-                    { degree: 'High School Diploma', school: 'Example High School', year: '2014 - 2018' }
-                ],
-                awards: [
-                    { title: 'Web Development Competition Winner', description: 'First Place in XYZ Web Development Competition' },
-                    { title: 'Outstanding Student of the Year', description: 'Awarded for academic excellence and leadership skills' }
-                ],
-                workExperiences: [
-                    { position: 'Web Developer Intern', company: 'ABC Company', duration: 'Summer 2022' },
-                    { position: 'Front-end Developer', company: 'XYZ Agency', duration: '2022 - Present' }
-                ],
-                currentDate: '',
-                currentTime: '',
-                weather: '',
-                weatherLoading: true
+                // 其他数据...
+                ipAddress: '',
             },
             mounted: function() {
-                this.getCurrentDate();
-                this.getCurrentTime();
-                this.getWeather();
+                // 获取访问者的 IP 地址
+                this.getIpAddress();
             },
             methods: {
-                getCurrentDate: function() {
-                    var date = new Date();
-                    this.currentDate = date.toDateString();
-                },
-                getCurrentTime: function() {
+                // 获取访问者的 IP 地址
+                getIpAddress: function() {
                     var self = this;
-                    setInterval(function() {
-                        var time = new Date();
-                        self.currentTime = time.toLocaleTimeString();
-                    }, 1000);
+                    $.getJSON('https://jsonip.com?callback=?', function(data) {
+                        self.ipAddress = data.ip;
+                        // 根据 IP 地址获取天气信息
+                        self.getWeather();
+                    });
                 },
+                // 根据 IP 地址获取天气信息
                 getWeather: function() {
                     var self = this;
-                    var apiUrl = 'https://api.weatherapi.com/v1/current.json?key=5cf941264b624df4a2b151729232206&q=London';
-                    // 请替换 YOUR_API_KEY 和 YOUR_LOCATION 为你的实际 API 密钥和地理位置信息
+                    // 替换为您所使用的天气 API 的 URL，将 YOUR_API_KEY 替换为您的 API 密钥
+                    var weatherApiUrl = 'https://api.weather.com/your-api-endpoint?ip=' + this.ipAddress + '&apikey=<!DOCTYPE html>
+<html>
+<head>
+    <title>GitHub 主页</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* 添加自定义的 CSS 样式 */
+        .weather-widget {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
 
-                    $.ajax({
-                        url: apiUrl,
-                        method: 'GET',
-                        success: function(response) {
-                            self.weather = 'Weather in ' + response.location.name + ': ' + response.current.temp_c + '°C, ' + response.current.condition.text;
-                            self.weatherLoading = false;
-                        },
-                        error: function() {
-                            self.weather = 'Failed to fetch weather information';
-                            self.weatherLoading = false;
-                        }
+        .weather-widget p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1>Welcome to My GitHub Page</h1>
+        </header>
+        <section>
+            <h2>About Me</h2>
+            <p>I'm a passionate web developer with expertise in PHP, Vue.js, and HTML. I love creating beautiful and functional websites.</p>
+        </section>
+        <section>
+            <h2>Interests</h2>
+            <ul>
+                <li v-for="interest in interests">{{ interest }}</li>
+            </ul>
+        </section>
+        <section>
+            <h2>Education</h2>
+            <ul>
+                <li v-for="education in educations">
+                    <h3>{{ education.degree }}</h3>
+                    <p>{{ education.school }}</p>
+                    <p>{{ education.year }}</p>
+                </li>
+            </ul>
+        </section>
+        <section>
+            <h2>Awards</h2>
+            <ul>
+                <li v-for="award in awards">
+                    <h3>{{ award.title }}</h3>
+                    <p>{{ award.description }}</p>
+                </li>
+            </ul>
+        </section>
+        <section>
+            <h2>Work Experience</h2>
+            <ul>
+                <li v-for="experience in workExperiences">
+                    <h3>{{ experience.position }}</h3>
+                    <p>{{ experience.company }}</p>
+                    <p>{{ experience.duration }}</p>
+                </li>
+            </ul>
+        </section>
+        <section>
+            <h2>Today's Date and Time</h2>
+            <p>{{ currentDate }}</p>
+            <p>{{ currentTime }}</p>
+        </section>
+        <footer>
+            <p>&copy; 2023 My GitHub Page. All rights reserved.</p>
+        </footer>
+        <div class="weather-widget" v-if="!weatherLoading">
+            <h2>Weather</h2>
+            <p>{{ weather }}</p>
+        </div>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                // 其他数据...
+                ipAddress: '',
+            },
+            mounted: function() {
+                // 获取访问者的 IP 地址
+                this.getIpAddress();
+            },
+            methods: {
+                // 获取访问者的 IP 地址
+                getIpAddress: function() {
+                    var self = this;
+                    $.getJSON('https://jsonip.com?callback=?', function(data) {
+                        self.ipAddress = data.ip;
+                        // 根据 IP 地址获取天气信息
+                        self.getWeather();
                     });
-                }
+                },
+                // 根据 IP 地址获取天气信息
+                getWeather: function() {
+                    var self = this;
+                    // 替换为您所使用的天气 API 的 URL，将 YOUR_API_KEY 替换为您的 API 密钥
+                    var weatherApiUrl = 'https://api.weather.com/your-api-endpoint?ip=' + this.ipAddress + '&apikey=5cf941264b624df4a2b151729232206';
+                    // 发起 API 请求并处理返回的天气数据
+                    $.getJSON(weatherApiUrl, function(data) {
+                        // 处理天气数据
+                        var weather = data.weather; // 获取天气信息
+                        self.weather = weather; // 将天气信息赋值给 Vue 实例的数据属性
+                    });
+                },
+            }
+        });
+    </script>
+</body>
+</html>
+';
+                    // 发起 API 请求并处理返回的天气数据
+                    $.getJSON(weatherApiUrl, function(data) {
+                        // 处理天气数据
+                        var weather = data.weather; // 获取天气信息
+                        self.weather = weather; // 将天气信息赋值给 Vue 实例的数据属性
+                    });
+                },
             }
         });
     </script>
