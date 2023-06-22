@@ -108,7 +108,7 @@
                 },
                 getWeather: function() {
                     var self = this;
-                    var apiUrl = 'https://api.weatherapi.com/v1/current.json?key=' + this.weatherApiKey + '&q=' + this.location;
+                    var apiUrl = 'https://api.weatherapi.com/v1/current.json?key='this.weatherApiKey'&q='this.location'';
                     $.getJSON(apiUrl, function(data) {
                         self.weather = data.current.condition.text;
                     });
