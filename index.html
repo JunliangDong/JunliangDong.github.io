@@ -79,9 +79,9 @@
             <p>{{ weather }}</p>
         </div>
     </div>
-    
+
     <script>
-        new Vue({
+        var app = new Vue({
             el: '#app',
             data: {
                 interests: ['Web Development', 'Machine Learning', 'UI/UX Design'],
@@ -99,12 +99,8 @@
                 ],
                 currentDate: '',
                 currentTime: '',
-                // 其他数据...
-                ipAddress: '',
-                location: '',
                 weather: '',
-                weatherLoading: true,
-                weatherApiKey: '5cf941264b624df4a2b151729232206',
+                weatherLoading: true
             },
             mounted: function() {
                 this.getCurrentDate();
@@ -123,29 +119,24 @@
                         self.currentTime = time.toLocaleTimeString();
                     }, 1000);
                 },
-            mounted: function() {
-                this.getIpAddress();
-            },
-            methods: {
-                getIpAddress: function() {
-                    var self = this;
-                    $.getJSON('https://ip-api.com/json/?fields=status,message,country,regionName,city', function(data) {
-                        if (data.status === 'success') {
-                            self.ipAddress = data.query;
-                            self.location = data.city;
-                            self.getWeather();
-                        } else {
-                            console.log('Failed to get IP address.');
-                        }
-                    });
-                },
                 getWeather: function() {
                     var self = this;
-                    var apiUrl = 'https://api.weatherapi.com/v1/current.json?key=5cf941264b624df4a2b151729232206&q=London';
-                    $.getJSON(apiUrl, function(data) {
-                        self.weather = data.current.condition.text;
+                    var apiUrl = 'https://api.weatherapi.com/v1/current.json?key=YOUR_API_KEY&q=YOUR_LOCATION';
+                    // 请替换 YOUR_API_KEY 和 YOUR_LOCATION 为你的实际 API 密钥和地理位置信息
+
+                    $.ajax({
+                        url: apiUrl,
+                        method: 'GET',
+                        success: function(response) {
+                            self.weather = 'Weather in ' + response.location.name + ': ' + response.current.temp_c + '°C, ' + response.current.condition.text;
+                            self.weatherLoading = false;
+                        },
+                        error: function() {
+                            self.weather = 'Failed to fetch weather information';
+                            self.weatherLoading = false;
+                        }
                     });
-                },
+                }
             }
         });
     </script>
