@@ -99,7 +99,7 @@
                     $.getJSON('https://ip-api.com/json/?fields=status,message,country,regionName,city', function(data) {
                         if (data.status === 'success') {
                             self.ipAddress = data.query;
-                            self.location = data.city + ', ' + data.regionName + ', ' + data.country;
+                            self.location = data.city;
                             self.getWeather();
                         } else {
                             console.log('Failed to get IP address.');
