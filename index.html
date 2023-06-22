@@ -5,6 +5,22 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* 添加自定义的 CSS 样式 */
+        .weather-widget {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .weather-widget p {
+            margin: 5px 0;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
@@ -55,14 +71,13 @@
             <p>{{ currentDate }}</p>
             <p>{{ currentTime }}</p>
         </section>
-        <section>
-            <h2>Weather</h2>
-            <p v-if="weatherLoading">Loading weather...</p>
-            <p v-else>{{ weather }}</p>
-        </section>
         <footer>
             <p>&copy; 2023 My GitHub Page. All rights reserved.</p>
         </footer>
+        <div class="weather-widget" v-if="!weatherLoading">
+            <h2>Weather</h2>
+            <p>{{ weather }}</p>
+        </div>
     </div>
 
     <script>
