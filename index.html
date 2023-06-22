@@ -99,7 +99,7 @@
                     $.getJSON('https://ip-api.com/json/?fields=status,message,country,regionName,city', function(data) {
                         if (data.status === 'success') {
                             self.ipAddress = data.query;
-                            self.location = data.city;
+                            self.location = data.city + ', ' + data.regionName + ', ' + data.country;
                             self.getWeather();
                         } else {
                             console.log('Failed to get IP address.');
@@ -108,7 +108,7 @@
                 },
                 getWeather: function() {
                     var self = this;
-                    var apiUrl = 'https://api.weatherapi.com/v1/current.json?key=' + this.weatherApiKey + '&q=' + encodeURIComponent(this.location);
+                    var apiUrl = 'https://api.weatherapi.com/v1/current.json?key=' + this.weatherApiKey + '&q=' + this.location;
                     $.getJSON(apiUrl, function(data) {
                         self.weather = data.current.condition.text;
                     });
