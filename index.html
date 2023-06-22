@@ -100,12 +100,13 @@
                 currentDate: '',
                 currentTime: '',
                 weather: '',
-                weatherLoading: true
+                weatherLoading: true,
+                weatherApiKey: '5cf941264b624df4a2b151729232206'
             },
             mounted: function() {
                 this.getCurrentDate();
                 this.getCurrentTime();
-                this.getWeather();
+                this.getLocationAndWeather();
             },
             methods: {
                 getCurrentDate: function() {
@@ -119,22 +120,19 @@
                         self.currentTime = time.toLocaleTimeString();
                     }, 1000);
                 },
-                getWeather: function() {
+                getLocationAndWeather: function() {
                     var self = this;
-                    var apiUrl = 'https://api.weatherapi.com/v1/current.json?key=5cf941264b624df4a2b151729232206&q=London';
-                    // 请替换 YOUR_API_KEY 和 YOUR_LOCATION 为你的实际 API 密钥和地理位置信息
-
-                    $.ajax({
-                        url: apiUrl,
-                        method: 'GET',
-                        success: function(response) {
-                            self.weather = 'Weather in ' + response.location.name + ': ' + response.current.temp_c + '°C, ' + response.current.condition.text;
-                            self.weatherLoading = false;
-                        },
-                        error: function() {
-                            self.weather = 'Failed to fetch weather information';
-                            self.weatherLoading = false;
-                        }
+                    $.getJSON('https://ipapi.co/json/', function(data) {
+                        var location = data.city;
+                        self.getWeather(location);
+                    });
+                },
+                getWeather: function(location) {
+                    var self = this;
+                    var apiUrl = 'https://api.weatherapi.com/v1/current.json?key=' + this.weatherApiKey + '&q=' + encodeURIComponent(location);
+                    $.getJSON(apiUrl, function(data) {
+                        self.weather = 'Weather in ' + data.location.name + ': ' + data.current.temp_c + '°C, ' + data.current.condition.text;
+                        self.weatherLoading = false;
                     });
                 }
             }
