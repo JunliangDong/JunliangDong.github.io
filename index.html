@@ -84,12 +84,45 @@
         new Vue({
             el: '#app',
             data: {
+                interests: ['Web Development', 'Machine Learning', 'UI/UX Design'],
+                educations: [
+                    { degree: 'Bachelor of Science', school: 'University of Example', year: '2018 - 2022' },
+                    { degree: 'High School Diploma', school: 'Example High School', year: '2014 - 2018' }
+                ],
+                awards: [
+                    { title: 'Web Development Competition Winner', description: 'First Place in XYZ Web Development Competition' },
+                    { title: 'Outstanding Student of the Year', description: 'Awarded for academic excellence and leadership skills' }
+                ],
+                workExperiences: [
+                    { position: 'Web Developer Intern', company: 'ABC Company', duration: 'Summer 2022' },
+                    { position: 'Front-end Developer', company: 'XYZ Agency', duration: '2022 - Present' }
+                ],
+                currentDate: '',
+                currentTime: '',
                 // 其他数据...
                 ipAddress: '',
                 location: '',
                 weather: '',
+                weatherLoading: true,
                 weatherApiKey: '5cf941264b624df4a2b151729232206',
             },
+            mounted: function() {
+                this.getCurrentDate();
+                this.getCurrentTime();
+                this.getWeather();
+            },
+            methods: {
+                getCurrentDate: function() {
+                    var date = new Date();
+                    this.currentDate = date.toDateString();
+                },
+                getCurrentTime: function() {
+                    var self = this;
+                    setInterval(function() {
+                        var time = new Date();
+                        self.currentTime = time.toLocaleTimeString();
+                    }, 1000);
+                },
             mounted: function() {
                 this.getIpAddress();
             },
