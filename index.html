@@ -3,6 +3,8 @@
 <head>
     <title>GitHub 主页</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div id="app">
@@ -14,29 +16,112 @@
             <p>I'm a passionate web developer with expertise in PHP, Vue.js, and HTML. I love creating beautiful and functional websites.</p>
         </section>
         <section>
-            <h2>Projects</h2>
+            <h2>Interests</h2>
             <ul>
-                <li v-for="project in projects">
-                    <h3>{{ project.name }}</h3>
-                    <p>{{ project.description }}</p>
+                <li v-for="interest in interests">{{ interest }}</li>
+            </ul>
+        </section>
+        <section>
+            <h2>Education</h2>
+            <ul>
+                <li v-for="education in educations">
+                    <h3>{{ education.degree }}</h3>
+                    <p>{{ education.school }}</p>
+                    <p>{{ education.year }}</p>
                 </li>
             </ul>
+        </section>
+        <section>
+            <h2>Awards</h2>
+            <ul>
+                <li v-for="award in awards">
+                    <h3>{{ award.title }}</h3>
+                    <p>{{ award.description }}</p>
+                </li>
+            </ul>
+        </section>
+        <section>
+            <h2>Work Experience</h2>
+            <ul>
+                <li v-for="experience in workExperiences">
+                    <h3>{{ experience.position }}</h3>
+                    <p>{{ experience.company }}</p>
+                    <p>{{ experience.duration }}</p>
+                </li>
+            </ul>
+        </section>
+        <section>
+            <h2>Today's Date and Time</h2>
+            <p>{{ currentDate }}</p>
+            <p>{{ currentTime }}</p>
+        </section>
+        <section>
+            <h2>Weather</h2>
+            <p v-if="weatherLoading">Loading weather...</p>
+            <p v-else>{{ weather }}</p>
         </section>
         <footer>
             <p>&copy; 2023 My GitHub Page. All rights reserved.</p>
         </footer>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script>
         var app = new Vue({
             el: '#app',
             data: {
-                projects: [
-                    { name: 'Project 1', description: 'Description of Project 1' },
-                    { name: 'Project 2', description: 'Description of Project 2' },
-                    { name: 'Project 3', description: 'Description of Project 3' }
-                ]
+                interests: ['Web Development', 'Machine Learning', 'UI/UX Design'],
+                educations: [
+                    { degree: 'Bachelor of Science', school: 'University of Example', year: '2018 - 2022' },
+                    { degree: 'High School Diploma', school: 'Example High School', year: '2014 - 2018' }
+                ],
+                awards: [
+                    { title: 'Web Development Competition Winner', description: 'First Place in XYZ Web Development Competition' },
+                    { title: 'Outstanding Student of the Year', description: 'Awarded for academic excellence and leadership skills' }
+                ],
+                workExperiences: [
+                    { position: 'Web Developer Intern', company: 'ABC Company', duration: 'Summer 2022' },
+                    { position: 'Front-end Developer', company: 'XYZ Agency', duration: '2022 - Present' }
+                ],
+                currentDate: '',
+                currentTime: '',
+                weather: '',
+                weatherLoading: true
+            },
+            mounted: function() {
+                this.getCurrentDate();
+                this.getCurrentTime();
+                this.getWeather();
+            },
+            methods: {
+                getCurrentDate: function() {
+                    var date = new Date();
+                    this.currentDate = date.toDateString();
+                },
+                getCurrentTime: function() {
+                    var self = this;
+                    setInterval(function() {
+                        var time = new Date();
+                        self.currentTime = time.toLocaleTimeString();
+                    }, 1000);
+                },
+                getWeather: function() {
+                    var self = this;
+                    var apiUrl = 'https://api.weatherapi.com/v1/current.json?key=YOUR_API_KEY&q=YOUR_LOCATION';
+                    // 请替换 YOUR_API_KEY 和 YOUR_LOCATION 为你的实际 API 密钥和地理位置信息
+
+                    $.ajax({
+                        url: apiUrl,
+                        method: 'GET',
+                        success: function(response) {
+                            self.weather = 'Weather in ' + response.location.name + ': ' + response.current.temp_c + '°C, ' + response.current.condition.text;
+                            self.weatherLoading = false;
+                        },
+                        error: function() {
+                            self.weather = 'Failed to fetch weather information';
+                            self.weatherLoading = false;
+                        }
+                    });
+                }
             }
         });
     </script>
