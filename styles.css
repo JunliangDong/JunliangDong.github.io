@@ -35,3 +35,10 @@ ul {
 li {
     margin-bottom: 20px;
 }
+
+.weather-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999; /* 可选：确保天气组件显示在其他元素上方 */
+}
