@@ -37,19 +37,13 @@ li {
 }
 
 .weather-container {
-    position: fixed;
+    position: absolute;
     top: 20px;
     right: 20px;
     z-index: 9999; /* 可选：确保天气组件显示在其他元素上方 */
-    display: flex;
-    justify-content: flex-end;
 }
 
 .weather-widget {
-            position: sticky; /*如果想要随着网页滚动用fixed,锁定了要用sticky*/
-            top: 0px;
-            /*right: 20px;*/
-            /*float: right;*/
             padding: 10px;
             background-color: #f0f0f0;
             border-radius: 5px;
