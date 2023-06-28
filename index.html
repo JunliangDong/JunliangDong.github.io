@@ -62,6 +62,7 @@
                 <li v-for="award in awards">
                     <h3>{{ award.title }}</h3>
                     <p>{{ award.description }}</p>
+                    <p>{{ award.date }}</p>
                 </li>
             </ul>
         </section>
@@ -93,15 +94,16 @@
         var app = new Vue({
             el: '#app',
             data: {
-                interests: ['NLP', 'Machine Learning', 'Artificial Intelligence'],
+                interests: ['NLP', 'Machine Learning', 'Artificial Intelligence','Cooking and Guitar :)'],
                 educations: [
                     { degree: 'Master of Science', school: 'University of Nottingham(UK)',major:'Computer Science(Artificial Intelligence)', year: '2021 - 2022' },
                     { degree: 'Bachelor of Science', school: 'University of Ningbo(China)',major:'industrial engineering', year: '2016 - 2020' },
                     { degree: 'High School Diploma', school: 'NanNing Secondary School(China)', major:'', year: '2013 - 2016' }
                 ],
                 awards: [
-                    { title: 'Web Development Competition Winner', description: 'First Place in XYZ Web Development Competition' },
-                    { title: 'Outstanding Student of the Year', description: 'Awarded for academic excellence and leadership skills' }
+                    { title: 'Outstanding projects at Ningbo University', description: 'Research project in the social sciences category <The construction and use of fountains in residential communities and commercial centers> was awarded a key project (top 5%)',date:'2016.11' },
+                    { title: 'Ningbo University Mathematical Modelling Competition', description: 'Writing "Campus Dining Problem and Optimization Based on Linear Programming Ideas" by analyzing the dining situation on campus and winning the second prize (top 20%)',date:'2018.5' },
+                    { title: 'Ningbo University Third Class Scholarship'，description:'Available to students whose grades are in the top 20% of their major.',date:'2016,2018'}
                 ],
                 workExperiences: [
                     { position: 'Web Developer Intern', company: 'ABC Company', duration: 'Summer 2022' },
