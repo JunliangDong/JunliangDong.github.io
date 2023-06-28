@@ -51,6 +51,7 @@
                 <li v-for="education in educations">
                     <h3>{{ education.degree }}</h3>
                     <p>{{ education.school }}</p>
+                    <p>{{ education.major }}</p>
                     <p>{{ education.year }}</p>
                 </li>
             </ul>
@@ -92,10 +93,11 @@
         var app = new Vue({
             el: '#app',
             data: {
-                interests: ['NLP', 'Machine Learning', 'AI'],
+                interests: ['NLP', 'Machine Learning', 'Artificial Intelligence'],
                 educations: [
-                    { degree: 'Bachelor of Science', school: 'University of Example', year: '2018 - 2022' },
-                    { degree: 'High School Diploma', school: 'Example High School', year: '2014 - 2018' }
+                    { degree: 'Master of Science', school: 'University of Nottingham(UK)',major:'Computer Science(Artificial Intelligence)', year: '2021 - 2022' },
+                    { degree: 'Bachelor of Science', school: 'University of Ningbo(China)',major:'industrial engineering', year: '2016 - 2020' },
+                    { degree: 'High School Diploma', school: 'NanNing Secondary School(China)', major:'', year: '2013 - 2016' }
                 ],
                 awards: [
                     { title: 'Web Development Competition Winner', description: 'First Place in XYZ Web Development Competition' },
